@@ -1,2 +1,2 @@
 # WAD-
-Well designed website, so spaghetti
+Well designed website, no spaghetti
