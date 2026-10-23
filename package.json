@@ -1,32 +1,15 @@
 {
   "name": "tuckin-tuckshop",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
-  "description": "Tuck In: an online ordering system for a school tuckshop, built with Next.js and SQL",
+  "description": "Tuck In: an online ordering system for a school tuckshop, built with HTML, CSS, JavaScript and SQL",
+  "type": "module",
   "scripts": {
-    "dev": "next dev -p 4000",
-    "build": "next build",
-    "start": "next start -p 4000",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
+    "start": "node server.js",
+    "dev": "node --watch server.js",
     "db:reset": "node db/reset.mjs"
   },
   "engines": {
     "node": ">=22.13"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.104.5",
-    "next": "16.4.2",
-    "react": "19.3.1",
-    "react-dom": "19.3.1",
-    "server-only": "^0.0.1"
-  },
-  "devDependencies": {
-    "@types/node": "^24.19.2",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "eslint": "^9",
-    "eslint-config-next": "16.4.2",
-    "typescript": "^5.9.3"
   }
 }
