@@ -16,6 +16,8 @@ npm run dev          # same, restarting when server.js changes
 npm run db:reset     # delete the database; it is rebuilt from the SQL scripts on the next start
 ```
 
+The site must be opened through the server (not by double-clicking the HTML files), because the pages load their data from the API.
+
 On first start the app runs `db/schema.sql` and `db/seed.sql` to create `db/tuckshop.db` automatically.
 
 ### Demo accounts
@@ -37,7 +39,7 @@ On first start the app runs `db/schema.sql` and `db/seed.sql` to create `db/tuck
 | Data listing page   | `/menu`                    | `public/menu.html`      |
 | Details page        | `/product?id=1`            | `public/product.html`   |
 | Search              | Header search + `/menu?q=` | `public/menu.html`, `public/script.js` |
-| Data entry forms    | Admin item form, checkout, contact, register | `public/admin.html`, `public/cart.html` |
+| Data entry forms    | Admin item form, checkout, contact, register, profile | `public/admin.html`, `public/cart.html`, `public/contact.html`, `public/register.html`, `public/dashboard.html` |
 | Contact page        | `/contact`                 | `public/contact.html`   |
 | Admin management    | `/admin` (admin only)      | `public/admin.html`     |
 | Your order (checkout) | `/cart`                  | `public/cart.html`      |
@@ -72,7 +74,8 @@ public/*.html          One standalone HTML file per page
 public/styles.css      All the CSS
 public/script.js       All the browser-side JavaScript; each page runs its own section
 server.js              Serves the pages and the REST API, talks to the database
-db/                    SQL scripts (schema, seed data, example queries)
+db/                    SQL scripts (schema, seed data, example queries) and reset.mjs
+.github/workflows/     CI: syntax-checks the JavaScript and smoke-tests the running server
 public/images/         Logo, favicon and the menu item illustrations
 docs/wireframe.html    Wireframes, site map and ER diagram
 ```
@@ -89,7 +92,7 @@ docs/wireframe.html    Wireframes, site map and ER diagram
 ### CSS (`public/styles.css`)
 - Custom properties (design tokens), a modern reset and the box model
 - **Flexbox** (header, rows) and **Grid** (`auto-fill`/`minmax`, page layouts)
-- **Mobile-first responsive design**: media queries at 600, 768 and 1024px, plus `clamp()` fluid type, `min()` and scrolling tables
+- **Mobile-first responsive design**: media queries from 600px to 1100px (mainly 768 and 1024px), plus `clamp()` fluid type, `min()` and scrolling tables
 - Selectors: pseudo-classes (`:hover`, `:focus-visible`, `:nth-child`, `:not`), pseudo-elements (`::before`, `::after`, `::backdrop`) and attribute selectors (`[aria-pressed='true']`, `[data-score]`)
 - Positioning (`sticky`, `absolute`, `fixed`), transitions and `@keyframes` animations
 - Dark mode (`prefers-color-scheme`), `prefers-reduced-motion`, print styles (`@media print`)
