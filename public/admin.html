@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Run the Tuck In tuckshop: orders, menu items, customers and messages.">
+  <meta name="theme-color" content="#1f4fa3">
+  <title>Admin | Tuck In</title>
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Big+Shoulders+Display:wght@800;900&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/script.js" defer></script>
+</head>
+<body data-page="admin">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="wordmark" href="/">Tuck In</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Navigation">
+        <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="2.5"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul role="list">
+          <li><a href="/menu">Menu</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li data-auth="guest"><a href="/login">Log in</a></li>
+          <li data-auth="guest"><a href="/register">Register</a></li>
+          <li data-auth="user" hidden><a href="/dashboard">My orders</a></li>
+          <li data-auth="admin" hidden><a href="/admin">Admin</a></li>
+          <li data-auth="user" hidden><button class="link-button" type="button" data-logout>Log out</button></li>
+          <li><a class="order-link" href="/cart">Your order <span class="cart-count" data-cart-count>0</span></a></li>
+        </ul>
+        <form class="header-search" action="/menu" method="get" role="search">
+          <label class="visually-hidden" for="site-search">Search the price list</label>
+          <input type="search" id="site-search" name="q" placeholder="Search" autocomplete="off">
+          <button class="btn btn--sm btn--outline" type="submit">Search</button>
+        </form>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="container page-header">
+      <h1>Shop admin</h1>
+    </header>
+
+    <div class="container dashboard">
+      <div class="tabs" role="tablist" aria-label="Admin sections">
+        <button role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true">Today</button>
+        <button role="tab" id="tab-orders" aria-controls="panel-orders" aria-selected="false" tabindex="-1">Orders</button>
+        <button role="tab" id="tab-products" aria-controls="panel-products" aria-selected="false" tabindex="-1">Menu items</button>
+        <button role="tab" id="tab-customers" aria-controls="panel-customers" aria-selected="false" tabindex="-1">Customers</button>
+        <button role="tab" id="tab-messages" aria-controls="panel-messages" aria-selected="false" tabindex="-1">Messages</button>
+      </div>
+
+      <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="dashboard">
+        <h2 class="visually-hidden">Shop totals</h2>
+        <dl class="figures" id="stats"></dl>
+        <div class="table-wrapper">
+          <table>
+            <caption>Best sellers</caption>
+            <thead><tr><th scope="col">Item</th><th scope="col">Section</th><th scope="col" class="num">Sold</th><th scope="col" class="num">Takings</th></tr></thead>
+            <tbody id="top-products"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-orders" role="tabpanel" aria-labelledby="tab-orders" hidden>
+        <div class="section-header">
+          <h2>Orders</h2>
+          <div>
+            <label for="status-filter">Show</label>
+            <select id="status-filter">
+              <option value="">All orders</option>
+              <option value="pending">Pending</option><option value="preparing">Preparing</option><option value="ready">Ready</option>
+              <option value="collected">Collected</option><option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <caption class="visually-hidden">Customer orders</caption>
+            <thead><tr><th scope="col">No.</th><th scope="col">Customer</th><th scope="col">Items</th><th scope="col">Collect at</th><th scope="col" class="num">Total</th><th scope="col">Status</th></tr></thead>
+            <tbody id="orders-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-products" role="tabpanel" aria-labelledby="tab-products" hidden>
+        <div class="section-header">
+          <h2>Menu items</h2>
+          <div class="actions-cell">
+            <label class="visually-hidden" for="product-search">Search menu items</label>
+            <input type="search" id="product-search" placeholder="Search items">
+            <button class="btn" type="button" id="add-product">Add menu item</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <caption class="visually-hidden">Menu items</caption>
+            <thead><tr><th scope="col">Item</th><th scope="col">Section</th><th scope="col" class="num">Price</th><th scope="col" class="num">In stock</th><th scope="col">On menu</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead>
+            <tbody id="products-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-customers" role="tabpanel" aria-labelledby="tab-customers" hidden>
+        <h2>Customers</h2>
+        <div class="table-wrapper">
+          <table>
+            <caption class="visually-hidden">Registered users</caption>
+            <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Cellphone</th><th scope="col">Role</th><th scope="col" class="num">Orders</th><th scope="col" class="num">Spent</th><th scope="col">Joined</th></tr></thead>
+            <tbody id="customers-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-messages" role="tabpanel" aria-labelledby="tab-messages" hidden>
+        <h2>Messages</h2>
+        <div id="messages"></div>
+      </section>
+    </div>
+
+    <dialog id="product-dialog" aria-labelledby="dialog-title">
+      <form class="form" id="product-form" method="dialog">
+        <h2 id="dialog-title">Add menu item</h2>
+        <input type="hidden" name="productId" id="productId">
+        <div class="form-row">
+          <div class="field">
+            <label class="required" for="p-name">Name</label>
+            <input type="text" id="p-name" name="name" required maxlength="100" placeholder="Cheese russian roll">
+            <p class="field-error" id="p-name-error"></p>
+          </div>
+          <div class="field">
+            <label class="required" for="p-category">Section</label>
+            <select id="p-category" name="categoryId" required></select>
+            <p class="field-error" id="p-category-error"></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="p-description">Description</label>
+          <textarea id="p-description" name="description" maxlength="1000" rows="3"></textarea>
+          <p class="field-error" id="p-description-error"></p>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label class="required" for="p-price">Price (N$)</label>
+            <input type="number" id="p-price" name="price" required min="0.5" max="10000" step="0.5">
+            <p class="field-error" id="p-price-error"></p>
+          </div>
+          <div class="field">
+            <label class="required" for="p-stock">In stock</label>
+            <input type="number" id="p-stock" name="stock" required min="0" max="10000" step="1">
+            <p class="field-error" id="p-stock-error"></p>
+          </div>
+        </div>
+        <div class="image-picker">
+          <img id="p-image-preview" src="/images/menu/default.svg" alt="" width="80" height="80">
+          <div class="field">
+            <label for="p-image">Picture</label>
+            <select id="p-image" name="image"></select>
+            <p class="field-error" id="p-image-error"></p>
+          </div>
+        </div>
+        <label class="checkbox"><input type="checkbox" id="p-available" name="isAvailable" checked> Show on the menu</label>
+        <p class="alert alert--error" id="product-error" role="alert"></p>
+        <div class="button-row">
+          <button class="btn" type="submit" value="save">Save item</button>
+          <button class="btn btn--outline" type="button" id="cancel-dialog">Cancel</button>
+        </div>
+      </form>
+    </dialog>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <section aria-labelledby="footer-about">
+          <h2 id="footer-about">Tuck In</h2>
+          <p>The tuckshop in Block C. Order from class, pay at the counter, collect when your number is called.</p>
+        </section>
+        <section aria-labelledby="footer-hours">
+          <h2 id="footer-hours">Open</h2>
+          <p>Mon to Thu, 07:30 to 15:30<br>Fri, 07:30 to 14:00</p>
+        </section>
+        <section aria-labelledby="footer-visit">
+          <h2 id="footer-visit">Find us</h2>
+          <address>
+            Block C, ground floor<br>
+            Main Campus, Windhoek<br>
+            <a href="tel:+264811234567">081 123 4567</a>
+          </address>
+        </section>
+      </div>
+      <p class="footer-bottom">&copy; <span data-year>2026</span> Tuck In Tuckshop</p>
+    </div>
+  </footer>
+</body>
+</html>

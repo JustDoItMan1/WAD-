@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Track your Tuck In orders and update your details.">
+  <meta name="theme-color" content="#1f4fa3">
+  <title>My orders | Tuck In</title>
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Big+Shoulders+Display:wght@800;900&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/script.js" defer></script>
+</head>
+<body data-page="dashboard">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="wordmark" href="/">Tuck In</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Navigation">
+        <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="2.5"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul role="list">
+          <li><a href="/menu">Menu</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li data-auth="guest"><a href="/login">Log in</a></li>
+          <li data-auth="guest"><a href="/register">Register</a></li>
+          <li data-auth="user" hidden><a href="/dashboard">My orders</a></li>
+          <li data-auth="admin" hidden><a href="/admin">Admin</a></li>
+          <li data-auth="user" hidden><button class="link-button" type="button" data-logout>Log out</button></li>
+          <li><a class="order-link" href="/cart">Your order <span class="cart-count" data-cart-count>0</span></a></li>
+        </ul>
+        <form class="header-search" action="/menu" method="get" role="search">
+          <label class="visually-hidden" for="site-search">Search the price list</label>
+          <input type="search" id="site-search" name="q" placeholder="Search" autocomplete="off">
+          <button class="btn btn--sm btn--outline" type="submit">Search</button>
+        </form>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="container page-header">
+      <h1 id="greeting">My orders</h1>
+    </header>
+
+    <div class="container dashboard">
+      <dl class="figures" aria-label="Your order totals">
+        <div><dt>Orders</dt><dd id="stat-orders">0</dd></div>
+        <div><dt>Waiting to collect</dt><dd id="stat-active">0</dd></div>
+        <div><dt>Spent</dt><dd id="stat-spent">N$0</dd></div>
+      </dl>
+
+      <div class="tabs" role="tablist" aria-label="Account sections">
+        <button role="tab" id="tab-orders" aria-controls="panel-orders" aria-selected="true">Orders</button>
+        <button role="tab" id="tab-profile" aria-controls="panel-profile" aria-selected="false" tabindex="-1">My details</button>
+      </div>
+
+      <section id="panel-orders" role="tabpanel" aria-labelledby="tab-orders">
+        <div class="section-header">
+          <h2 class="visually-hidden">Order history</h2>
+          <label for="order-filter">Show</label>
+          <select id="order-filter">
+            <option value="">All orders</option>
+            <option value="active">Waiting to collect</option>
+            <option value="collected">Collected</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="order-list" id="orders">
+          <p class="loading">Loading your orders…</p>
+        </div>
+      </section>
+
+      <section id="panel-profile" role="tabpanel" aria-labelledby="tab-profile" hidden>
+        <h2 class="visually-hidden">My details</h2>
+        <form class="form auth-card" id="profile-form" method="post">
+          <div class="field">
+            <label class="required" for="name">Full name</label>
+            <input type="text" id="name" name="name" required minlength="2" maxlength="100" autocomplete="name">
+            <p class="field-error" id="name-error"></p>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" readonly>
+            <p class="field-hint">To change your email, send us a message on the contact page.</p>
+          </div>
+          <div class="field">
+            <label for="phone">Cellphone</label>
+            <input type="tel" id="phone" name="phone" pattern="\+?[0-9 ]{7,15}" autocomplete="tel"
+              data-pattern-message="Use 7 to 15 digits, for example 081 234 5678.">
+            <p class="field-error" id="phone-error"></p>
+          </div>
+          <div><button class="btn" type="submit">Save details</button></div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <section aria-labelledby="footer-about">
+          <h2 id="footer-about">Tuck In</h2>
+          <p>The tuckshop in Block C. Order from class, pay at the counter, collect when your number is called.</p>
+        </section>
+        <section aria-labelledby="footer-hours">
+          <h2 id="footer-hours">Open</h2>
+          <p>Mon to Thu, 07:30 to 15:30<br>Fri, 07:30 to 14:00</p>
+        </section>
+        <section aria-labelledby="footer-visit">
+          <h2 id="footer-visit">Find us</h2>
+          <address>
+            Block C, ground floor<br>
+            Main Campus, Windhoek<br>
+            <a href="tel:+264811234567">081 123 4567</a>
+          </address>
+        </section>
+      </div>
+      <p class="footer-bottom">&copy; <span data-year>2026</span> Tuck In Tuckshop</p>
+    </div>
+  </footer>
+</body>
+</html>

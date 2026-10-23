@@ -13,8 +13,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm run build
+      - run: node --check server.js
+      - run: node --check public/script.js
+      # Start the server and make sure the pages and the API answer
+      - run: |
+          node server.js &
+          sleep 2
+          curl -fsS http://localhost:4000/ > /dev/null
+          curl -fsS http://localhost:4000/menu > /dev/null
+          curl -fsS http://localhost:4000/api/products > /dev/null

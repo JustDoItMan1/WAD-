@@ -4,20 +4,16 @@ Well designed website, no spaghetti.
 
 A responsive web application for a school or campus tuckshop. Customers browse and search the menu, order ahead and track their orders. Administrators manage orders, products, customers and messages.
 
-Built with **Next.js 16** (App Router, TypeScript, React 19), **TanStack Query** for client-side data, plain CSS, and a **SQL database** (SQLite, built into Node).
+Built with plain **HTML**, **CSS** and **vanilla JavaScript**, and a **SQL database** (SQLite, built into Node). A small Node.js server (`server.js`) serves the pages and the JSON API, using only modules built into Node.
 
 ## Running it
 
 Requires **Node.js 22.13 or newer**. The SQLite database is built into Node, so there is nothing else to install.
 
 ```bash
-npm install
-npm run dev          # development server at http://localhost:4000
-npm run build        # production build
-npm start            # run the production build at http://localhost:4000
+npm start            # run the site at http://localhost:4000 (same as: node server.js)
+npm run dev          # same, restarting when server.js changes
 npm run db:reset     # delete the database; it is rebuilt from the SQL scripts on the next start
-npm run lint         # ESLint
-npm run typecheck    # TypeScript
 ```
 
 On first start the app runs `db/schema.sql` and `db/seed.sql` to create `db/tuckshop.db` automatically.
@@ -33,19 +29,19 @@ On first start the app runs `db/schema.sql` and `db/seed.sql` to create `db/tuck
 
 | Requirement         | URL                        | File                    |
 | ------------------- | -------------------------- | ----------------------- |
-| Homepage            | `/`                        | `src/app/page.tsx`      |
-| About page          | `/about`                   | `src/app/about/page.tsx` |
-| Registration page   | `/register`                | `src/app/register/page.tsx` |
-| Login page          | `/login`                   | `src/app/login/page.tsx` |
-| User dashboard      | `/dashboard` (logged in)   | `src/app/dashboard/page.tsx` |
-| Data listing page   | `/menu`                    | `src/app/menu/page.tsx` |
-| Details page        | `/menu/1`                  | `src/app/menu/[id]/page.tsx` |
-| Search              | Header search + `/menu?q=` | `src/components/features/menu/MenuBrowser.tsx` |
-| Data entry forms    | Admin item form, checkout, contact, register | `src/components/features/admin/ProductDialog.tsx`, `src/components/features/cart/Checkout.tsx` |
-| Contact page        | `/contact`                 | `src/app/contact/page.tsx` |
-| Admin management    | `/admin` (admin only)      | `src/app/admin/page.tsx` |
-| Your order (checkout) | `/cart`                  | `src/app/cart/page.tsx` |
-| REST API            | `/api/...`                 | `src/app/api/**/route.ts` |
+| Homepage            | `/`                        | `public/index.html`     |
+| About page          | `/about`                   | `public/about.html`     |
+| Registration page   | `/register`                | `public/register.html`  |
+| Login page          | `/login`                   | `public/login.html`     |
+| User dashboard      | `/dashboard` (logged in)   | `public/dashboard.html` |
+| Data listing page   | `/menu`                    | `public/menu.html`      |
+| Details page        | `/product?id=1`            | `public/product.html`   |
+| Search              | Header search + `/menu?q=` | `public/menu.html`, `public/script.js` |
+| Data entry forms    | Admin item form, checkout, contact, register | `public/admin.html`, `public/cart.html` |
+| Contact page        | `/contact`                 | `public/contact.html`   |
+| Admin management    | `/admin` (admin only)      | `public/admin.html`     |
+| Your order (checkout) | `/cart`                  | `public/cart.html`      |
+| REST API            | `/api/...`                 | `server.js`             |
 | Wireframe           | open in a browser          | `docs/wireframe.html`   |
 | SQL scripts         | table creation, seed data, queries | `db/schema.sql`, `db/seed.sql`, `db/queries.sql` |
 
@@ -72,14 +68,10 @@ The menu is a typical Windhoek tuckshop: russian, cheese russian, boerewors, min
 ## Project structure
 
 ```
-src/app/               Pages (server components) and the REST API (app/api/**/route.ts)
-src/components/ui/     Small reusable pieces: Field, Tabs, Money, StatusTag, Highlight
-src/components/layout/ Header, navigation, footer, toast messages, providers
-src/components/features/  Menu, cart, auth, dashboard, contact and admin components
-src/hooks/             useCart, useFormValidation, useMyOrders, useAdmin, useDebounce, useToast
-src/lib/               Database connection, sessions, validation, password hashing, API client
-src/lib/data/          All SQL queries, shared by pages and API routes
-src/styles/            The stylesheets, split by layer
+public/*.html          One standalone HTML file per page
+public/styles.css      All the CSS
+public/script.js       All the browser-side JavaScript; each page runs its own section
+server.js              Serves the pages and the REST API, talks to the database
 db/                    SQL scripts (schema, seed data, example queries)
 public/images/         Logo, favicon and the menu item illustrations
 docs/wireframe.html    Wireframes, site map and ER diagram
@@ -87,32 +79,31 @@ docs/wireframe.html    Wireframes, site map and ER diagram
 
 ## Concepts demonstrated
 
-### HTML (written as JSX)
+### HTML
 - Semantic structure: `header`, `nav`, `main`, `section`, `article`, `aside`, `footer`, `address`, `time`, `data`, `output`, `mark`, `details`/`summary` (an exclusive accordion using `name`), `dialog`, `dl`
 - Forms: `fieldset`/`legend`, `label`, and input types `email`, `tel`, `password`, `number`, `time`, `search`, `checkbox` and `radio`; `select`, `textarea`, `datalist`; validation with `required`, `pattern`, `min`/`max`, `minlength`/`maxlength`
 - Tables with `caption`, `thead`/`tbody`, `scope`; ordered and unordered lists; breadcrumb navigation; `iframe` map embed
 - Accessibility: skip link, `aria-label`, `aria-expanded`, `aria-current`, `aria-live`, `aria-invalid`, `role="tab"` tab panels with arrow-key support, alt text and visually-hidden labels
-- Page titles and descriptions from Next.js `metadata`, viewport theme colour, favicon, Google Fonts
+- Page titles and meta descriptions, viewport theme colour, favicon, Google Fonts
 
-### CSS (`src/styles/`)
-- Custom properties (design tokens), `@import`, a modern reset and the box model
+### CSS (`public/styles.css`)
+- Custom properties (design tokens), a modern reset and the box model
 - **Flexbox** (header, rows) and **Grid** (`auto-fill`/`minmax`, page layouts)
 - **Mobile-first responsive design**: media queries at 600, 768 and 1024px, plus `clamp()` fluid type, `min()` and scrolling tables
 - Selectors: pseudo-classes (`:hover`, `:focus-visible`, `:nth-child`, `:not`), pseudo-elements (`::before`, `::after`, `::backdrop`) and attribute selectors (`[aria-pressed='true']`, `[data-score]`)
 - Positioning (`sticky`, `absolute`, `fixed`), transitions and `@keyframes` animations
 - Dark mode (`prefers-color-scheme`), `prefers-reduced-motion`, print styles (`@media print`)
 
-### JavaScript / TypeScript, client side
-- React components, props and state; custom hooks; context (toast messages)
-- **TanStack Query**: cached queries, mutations, cache invalidation, polling (order status every 30 seconds), and server-rendered data passed in as `initialData`
-- A `class` with private fields and getters (the cart), `EventTarget` events, `localStorage`, syncing between tabs with the `storage` event, and `useSyncExternalStore`
-- `fetch` with `async`/`await` and `try`/`catch`, `URLSearchParams` and `history.replaceState` (shareable search URLs), a debounced live search
-- Form validation with the Constraint Validation API (`validity`, `setCustomValidity`), a password strength meter, a modal `<dialog>`
-- `Intl.NumberFormat`/`toLocaleString` formatting; text is escaped by React, so user input cannot inject HTML
+### JavaScript, client side (`public/script.js`)
+- DOM selection and updates, template literals, event listeners and event delegation (one listener for every "Add" button)
+- A `class` with private fields and getters (the cart), `EventTarget` custom events, `localStorage`, and syncing between tabs with the `storage` event
+- `fetch` with `async`/`await` and `try`/`catch`, `URLSearchParams` and `history.replaceState` (shareable search URLs), a debounced live search, polling (order status every 30 seconds)
+- Form validation with the Constraint Validation API (`validity`, `setCustomValidity`), a password strength meter, a modal `<dialog>`, accessible tabs
+- `Intl.NumberFormat`/`toLocaleString` formatting; user input is escaped before it goes into the page, so it cannot inject HTML
 
-### JavaScript / TypeScript, server side
-- **Server components** that query the database directly, dynamic routes (`/menu/[id]`), `notFound()`, `redirect()`
-- **REST API** with route handlers: GET, POST, PUT, PATCH and DELETE, JSON, HTTP status codes
+### JavaScript, server side (`server.js`)
+- An HTTP server built with Node's `http` module: serves the HTML pages and redirects to the login page for `/dashboard` and `/admin`
+- **REST API**: GET, POST, PUT, PATCH and DELETE, JSON, HTTP status codes
 - Sessions stored in SQL with an HTTP-only cookie; role-based access control (customer/admin) for pages and API routes
 - Password hashing with scrypt and a salt, server-side validation, central error handling
 

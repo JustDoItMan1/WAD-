@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The Tuck In tuckshop in Block C: who runs it, when it is open and how ordering works.">
+  <meta name="theme-color" content="#1f4fa3">
+  <title>About | Tuck In</title>
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Big+Shoulders+Display:wght@800;900&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/script.js" defer></script>
+</head>
+<body data-page="about">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="wordmark" href="/">Tuck In</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Navigation">
+        <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="2.5"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul role="list">
+          <li><a href="/menu">Menu</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li data-auth="guest"><a href="/login">Log in</a></li>
+          <li data-auth="guest"><a href="/register">Register</a></li>
+          <li data-auth="user" hidden><a href="/dashboard">My orders</a></li>
+          <li data-auth="admin" hidden><a href="/admin">Admin</a></li>
+          <li data-auth="user" hidden><button class="link-button" type="button" data-logout>Log out</button></li>
+          <li><a class="order-link" href="/cart">Your order <span class="cart-count" data-cart-count>0</span></a></li>
+        </ul>
+        <form class="header-search" action="/menu" method="get" role="search">
+          <label class="visually-hidden" for="site-search">Search the price list</label>
+          <input type="search" id="site-search" name="q" placeholder="Search" autocomplete="off">
+          <button class="btn btn--sm btn--outline" type="submit">Search</button>
+        </form>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="container page-header">
+      <h1>About Tuck In</h1>
+      <p>The tuckshop on the ground floor of Block C, next to the library.</p>
+    </header>
+
+    <div class="container split split--wide-left">
+      <article>
+        <h2>Why we take orders online</h2>
+        <p>
+          At lunch the queue for russian rolls used to reach the stairs, and most people only have
+          a short break between lectures. Ordering ahead means the kitchen can start your food before you arrive,
+          so you collect it and go.
+        </p>
+        <p>
+          The counter still works the old way too: walk up, order, pay. Online orders are simply packed first
+          at the time you choose.
+        </p>
+
+        <h2>How the shop has grown</h2>
+        <ol class="timeline" role="list">
+          <li><time datetime="2019">2019</time><p>Opened with a grill, a fridge and eight items on the board.</p></li>
+          <li><time datetime="2021">2021</time><p>Added boerewors rolls and a second fryer for slap chips.</p></li>
+          <li><time datetime="2023">2023</time><p>Started taking card payments at the counter.</p></li>
+          <li><time datetime="2026">2026</time><p>Started taking orders online.</p></li>
+        </ol>
+      </article>
+
+      <aside class="stack" aria-label="Opening hours and staff">
+        <section class="panel" aria-labelledby="hours-title">
+          <h2 id="hours-title">Opening hours</h2>
+          <table class="hours">
+            <caption class="visually-hidden">Weekly opening hours</caption>
+            <tbody>
+              <tr><th scope="row">Monday to Thursday</th><td><time>07:30</time> to <time>15:30</time></td></tr>
+              <tr><th scope="row">Friday</th><td><time>07:30</time> to <time>14:00</time></td></tr>
+              <tr><th scope="row">Weekends and public holidays</th><td>Closed</td></tr>
+            </tbody>
+          </table>
+        </section>
+        <section class="panel" aria-labelledby="team-title">
+          <h2 id="team-title">Behind the counter</h2>
+          <dl class="team">
+            <div><dt>Maria Shikongo</dt><dd>Runs the shop and the grill</dd></div>
+            <div><dt>Thomas Nghipondoka</dt><dd>Kitchen, rolls and chips</dd></div>
+            <div><dt>Selma Iipinge</dt><dd>Counter, stock and online orders</dd></div>
+          </dl>
+        </section>
+      </aside>
+    </div>
+
+    <section class="container section faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Questions</h2>
+      <details>
+        <summary>Do I need an account to order?</summary>
+        <p>You can look at the menu and add items without one. You need an account to send the order, so we can show you when it is ready.</p>
+      </details>
+      <details>
+        <summary>How do I pay?</summary>
+        <p>Cash or card at the counter when you collect. Nothing is charged online.</p>
+      </details>
+      <details>
+        <summary>Can I cancel an order?</summary>
+        <p>Yes, from My orders, as long as the kitchen has not started it. After that, speak to us at the counter.</p>
+      </details>
+      <details>
+        <summary>What happens if I don't collect?</summary>
+        <p>We keep orders until closing time. Orders that are not collected too often may be refused.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <section aria-labelledby="footer-about">
+          <h2 id="footer-about">Tuck In</h2>
+          <p>The tuckshop in Block C. Order from class, pay at the counter, collect when your number is called.</p>
+        </section>
+        <section aria-labelledby="footer-hours">
+          <h2 id="footer-hours">Open</h2>
+          <p>Mon to Thu, 07:30 to 15:30<br>Fri, 07:30 to 14:00</p>
+        </section>
+        <section aria-labelledby="footer-visit">
+          <h2 id="footer-visit">Find us</h2>
+          <address>
+            Block C, ground floor<br>
+            Main Campus, Windhoek<br>
+            <a href="tel:+264811234567">081 123 4567</a>
+          </address>
+        </section>
+      </div>
+      <p class="footer-bottom">&copy; <span data-year>2026</span> Tuck In Tuckshop</p>
+    </div>
+  </footer>
+</body>
+</html>

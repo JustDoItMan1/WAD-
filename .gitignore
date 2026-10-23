@@ -1,6 +1,2 @@
-node_modules/
-.next/
-next-env.d.ts
-*.tsbuildinfo
 db/*.db
 .DS_Store
