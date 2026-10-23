@@ -1,0 +1,67 @@
+/* =========================================================
+   FOOTER & GRIDS: site footer and reusable layouts
+   ========================================================= */
+
+.site-footer {
+  margin-top: var(--space-xl);
+  padding-block: var(--space-xl) var(--space-lg);
+  background: var(--clr-ink);
+  color: #d9dde6;
+}
+
+.site-footer h2 {
+  font-size: var(--fs-md);
+  color: #fff;
+  margin-bottom: var(--space-sm);
+}
+
+.site-footer a {
+  text-decoration-color: var(--clr-sign);
+}
+
+.footer-grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.footer-bottom {
+  max-width: none;
+  margin-top: var(--space-xl);
+  font-size: var(--fs-sm);
+  color: #9aa3b5;
+}
+
+address {
+  font-style: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+  .site-footer { border-top: 2px solid var(--clr-rule); }
+}
+
+.split {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .split--wide-left {
+    grid-template-columns: 2fr 1fr;
+  }
+}

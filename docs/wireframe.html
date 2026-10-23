@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tuck In Wireframes</title>
+  <style>
+    :root { --ink: #333; --line: #999; --fill: #e6e6e6; --dark: #bdbdbd; --note: #c0392b; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font: 14px/1.5 system-ui, sans-serif; color: var(--ink); background: #fafafa; padding: 24px 16px 64px; }
+    h1 { font-size: 28px; margin-bottom: 4px; }
+    h2 { font-size: 20px; margin: 48px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    .lead { color: #666; max-width: 75ch; }
+    .boards { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+    .board { flex: 1 1 560px; max-width: 760px; }
+    .board--mobile { flex: 0 0 260px; }
+    .frame { border: 2px solid var(--ink); background: #fff; padding: 10px; display: grid; gap: 10px; }
+    .box { border: 1.5px dashed var(--line); background: var(--fill); padding: 8px; min-height: 36px;
+           display: grid; place-items: center; text-align: center; font-size: 12px; color: #555; }
+    .box--dark { background: var(--dark); border-style: solid; }
+    .box--img { background: repeating-linear-gradient(45deg, #eee 0 8px, #ddd 8px 16px); }
+    .row { display: flex; gap: 10px; }
+    .row > * { flex: 1; }
+    .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .tall { min-height: 120px; } .xtall { min-height: 200px; }
+    .header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .header .box { min-height: 28px; }
+    .note { color: var(--note); font-size: 12px; margin-top: 6px; }
+    .lines { display: grid; gap: 5px; width: 100%; }
+    .lines i { display: block; height: 7px; background: #c8c8c8; border-radius: 3px; }
+    .lines i:nth-child(2) { width: 85%; } .lines i:nth-child(3) { width: 60%; }
+    .card { border: 1.5px solid var(--line); background: #fff; padding: 6px; display: grid; gap: 6px; }
+    table { border-collapse: collapse; width: 100%; font-size: 12px; }
+    th, td { border: 1px solid var(--line); padding: 4px 6px; text-align: left; }
+    th { background: var(--dark); }
+    .sitemap { display: grid; gap: 12px; justify-items: center; }
+    .sitemap .level { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .sitemap .box { min-width: 120px; }
+    .erd { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .erd table caption { font-weight: 700; text-align: left; padding: 4px 0; }
+    .pk { font-weight: 700; } .fk { font-style: italic; color: var(--note); }
+    .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; margin-top: 8px; }
+    @media (max-width: 640px) { .grid4 { grid-template-columns: repeat(2, 1fr); } .grid3 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tuck In Tuckshop: Wireframes</h1>
+    <p class="lead">Low-fidelity wireframes for the main pages at desktop and mobile widths, plus the site map and database
+      entity-relationship diagram. Grey boxes are content areas, hatched boxes are images, and red notes describe behaviour.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. Site map</h2>
+      <div class="sitemap">
+        <div class="box box--dark">Home (/)</div>
+        <div class="level">
+          <div class="box">About</div><div class="box">Menu (listing + search)</div><div class="box">Contact</div>
+          <div class="box">Cart / Checkout</div><div class="box">Login</div><div class="box">Register</div>
+        </div>
+        <div class="level">
+          <div class="box">Product details (?id=)</div>
+          <div class="box box--dark">User dashboard 🔒 customer</div>
+          <div class="box box--dark">Admin dashboard 🔒 admin</div>
+        </div>
+      </div>
+      <p class="note">🔒 = protected on the server; visitors who are not logged in are redirected to Login.</p>
+    </section>
+
+    <section>
+      <h2>2. Shared layout (every page)</h2>
+      <div class="boards">
+        <div class="board">
+          <h3>Desktop (≥ 1024px)</h3>
+          <div class="frame">
+            <div class="header box box--dark">
+              <span>Tuck In (wordmark)</span><span>Menu · About · Contact · Log in · Register · [Your order 2]</span><span>[Search____][Search]</span>
+            </div>
+            <div class="box xtall">&lt;main&gt; page content</div>
+            <div class="grid3"><div class="box">About blurb</div><div class="box">Quick links</div><div class="box">Address</div></div>
+          </div>
+          <p class="note">Sticky header. The footer has 3 columns on desktop and stacks to 1 column on mobile.</p>
+        </div>
+        <div class="board board--mobile">
+          <h3>Mobile (&lt; 768px)</h3>
+          <div class="frame">
+            <div class="header box box--dark"><span>Tuck In</span><span>☰</span></div>
+            <div class="box">Menu drawer (when ☰ open)<br>links + search</div>
+            <div class="box xtall">&lt;main&gt;</div>
+            <div class="box">Footer (stacked)</div>
+          </div>
+          <p class="note">The menu button (☰) toggles the nav (aria-expanded); Esc closes it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Home page: the price board</h2>
+      <div class="boards">
+        <div class="board">
+          <h3>Desktop</h3>
+          <div class="frame">
+            <div class="row">
+              <div class="box box--dark xtall">Painted blue wall<br><br>H1 "Order from class. Collect at the counter."<br>Short explanation<br>[See the full menu] [Create an account]<br>Open now until 15:30</div>
+              <div class="box box--dark xtall">Russian roll ............ N$28<br>Cheese russian roll ..... N$32<br>Boerewors roll .......... N$35<br>Mince roll .............. N$25<br>Coca-Cola 500ml ......... N$16<br><br>Snacks, sweets and hot drinks on the full menu</div>
+            </div>
+            <div class="box">H2 How ordering works</div>
+            <div class="grid3"><div class="box">1 Choose your food</div><div class="box">2 We start making it</div><div class="box">3 Pay and collect</div></div>
+          </div>
+          <p class="note">The board lists live prices from the database (rolls plus cold drinks), with yellow prices joined to names by dotted leaders.
+            The rows paint in one after another on load, which is the only automatic animation on the page. "Open now" is worked out from the current time.</p>
+        </div>
+        <div class="board board--mobile">
+          <h3>Mobile</h3>
+          <div class="frame">
+            <div class="header box"><span>Tuck In</span><span>☰</span></div>
+            <div class="box box--dark tall">H1<br>Explanation<br>[See the full menu]</div>
+            <div class="box box--dark tall">Price board<br>(full width)</div>
+            <div class="box">1 Choose your food</div><div class="box">2 We start making it</div><div class="box">3 Pay and collect</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Menu: data listing &amp; search</h2>
+      <div class="boards">
+        <div class="board">
+          <h3>Desktop (2 columns from 1100px)</h3>
+          <div class="frame">
+            <div class="box">H1 Menu · "Sold-out items come back after the next delivery."</div>
+            <div class="row"><div class="box">[Search with suggestions]</div><div class="box">[Sort ▾]</div><div class="box">☐ Hide sold-out items</div></div>
+            <div class="box">[Everything] [Rolls &amp; hot food] [Chips &amp; snacks] [Sweets] [Cold drinks] [Hot drinks]</div>
+            <div class="row">
+              <div class="box tall">H2 Rolls &amp; hot food<br>Russian roll ....... N$28 [Add]<br>description<br>Boerewors roll ..... N$35 [Add]<br>description</div>
+              <div class="box tall">H2 Sweets<br>Bar-One ........... N$13 [Add]<br>Glazed doughnut ... N$10 [Sold out]</div>
+            </div>
+          </div>
+          <p class="note">Items are grouped by section. Live search (debounced 300 ms) calls GET /api/products?q=&amp;category=&amp;sort=, highlights matches,
+            and keeps the filters in the URL. Sold-out items are struck through with a red sticker.</p>
+        </div>
+        <div class="board board--mobile">
+          <h3>Mobile</h3>
+          <div class="frame">
+            <div class="box">H1 Menu</div>
+            <div class="box">[Search]</div><div class="box">[Sort ▾]</div>
+            <div class="box">[Everything][Rolls… swipe</div>
+            <div class="box tall">Rolls &amp; hot food<br>Russian roll .. N$28 [Add]<br>Chip roll ..... N$18 [Add]</div>
+          </div>
+          <p class="note">The section buttons scroll sideways and the list is 1 column.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. Item details &amp; your order</h2>
+      <div class="boards">
+        <div class="board">
+          <h3>Item details: Desktop</h3>
+          <div class="frame">
+            <div class="box">Menu / Rolls &amp; hot food</div>
+            <div class="box box--dark tall">H1 Cheese russian roll, description ........ N$32 (large, yellow)</div>
+            <div class="box">Section: Rolls &amp; hot food<br>Availability: In stock</div>
+            <div class="box">[− 1 +] [Add to order] [View your order]</div>
+            <div class="box">H2 More rolls &amp; hot food (price list rows)</div>
+          </div>
+        </div>
+        <div class="board">
+          <h3>Your order (checkout): Desktop</h3>
+          <div class="frame">
+            <div class="box">H1 Your order</div>
+            <div class="row">
+              <div class="box xtall">Order slip<br>Russian roll (N$28 each) ...... N$28<br>[− 1 +] [Remove]<br>Russian &amp; chips (N$38 each) .. N$76<br>[− 2 +] [Remove]</div>
+              <div class="box xtall">Send your order (panel)<br>Items 3, Total N$104<br>[Collection time]<br>(•) Cash ( ) Card<br>[Notes for the kitchen]<br>[Send order]</div>
+            </div>
+          </div>
+          <p class="note">The order is kept in localStorage. Sending it requires login. The order, its items and the stock change are saved in one SQL transaction.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>6. Login &amp; registration</h2>
+      <div class="boards">
+        <div class="board">
+          <h3>Register (centred card, max 520px)</h3>
+          <div class="frame">
+            <div class="box">H1 Create your account · "Already registered? Log in"</div>
+            <div class="box">Fieldset "Your details": Full name* · Email* · Phone</div>
+            <div class="box">Fieldset "Security": Password* [strength meter] · Confirm* · ☐ Show</div>
+            <div class="box">☐ I agree to terms*</div>
+            <div class="box box--dark">[ Create account ]</div>
+          </div>
+          <p class="note">Inline errors appear on blur. Password rules use a regex pattern and the passwords must match.</p>
+        </div>
+        <div class="board board--mobile">
+          <h3>Login</h3>
+          <div class="frame">
+            <div class="box">H1 Welcome back</div>
+            <div class="box">Email*</div><div class="box">Password*</div>
+            <div class="box">☐ Show password</div>
+            <div class="box box--dark">[ Log in ]</div>
+            <div class="box">▸ Demo accounts</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>7. User dashboard</h2>
+      <div class="frame">
+        <div class="box">H1 "Demo's orders"</div>
+        <div class="box">Orders 3 | Waiting to collect 2 | Spent N$239 (a row of totals between two rules)</div>
+        <div class="box">[ Orders ] [ My details ] (tabs)</div>
+        <div class="row"><div class="box">H2 Order history</div><div class="box">[Filter ▾]</div></div>
+        <div class="grid3">
+          <div class="card"><div class="box">Order 12 [Pending]</div><div class="lines"><i></i><i></i><i></i></div><div class="box">N$ · [Cancel]</div></div>
+          <div class="card"><div class="box">Order 9 [Ready]</div><div class="lines"><i></i><i></i></div><div class="box">N$</div></div>
+          <div class="card"><div class="box">Order 4 [Collected]</div><div class="lines"><i></i><i></i></div><div class="box">N$</div></div>
+        </div>
+      </div>
+      <p class="note">Order statuses refresh every 30 s. The Profile tab holds an editable form (name, phone).</p>
+    </section>
+
+    <section>
+      <h2>8. Admin dashboard: management</h2>
+      <div class="frame">
+        <div class="box">[ Today ] [ Orders ] [ Menu items ] [ Customers ] [ Messages ]</div>
+        <div class="box">Takings | Orders to make | All orders | Customers | Items running low | Unread messages</div>
+        <div class="row"><div class="box">H2 Menu items</div><div class="box">[Search] [Add menu item]</div></div>
+        <table>
+          <thead><tr><th>Item</th><th>Section</th><th>Price</th><th>In stock</th><th>On menu</th><th></th></tr></thead>
+          <tbody><tr><td>Boerewors roll</td><td>Rolls &amp; hot food</td><td>N$35</td><td>30</td><td>Yes</td><td>[Edit] [Delete]</td></tr>
+          <tr><td>Glazed doughnut</td><td>Sweets</td><td>N$10</td><td>0</td><td>Hidden</td><td>[Edit] [Delete]</td></tr></tbody>
+        </table>
+        <div class="box tall">&lt;dialog&gt; Data entry form: Name, Section ▾, Description, Price, In stock, ☐ Show on the menu, [Save item]</div>
+      </div>
+      <p class="note">Orders tab: change status from a dropdown. Customers: read-only table. Messages: mark read or delete. Tables scroll sideways on mobile.</p>
+    </section>
+
+    <section>
+      <h2>9. Contact page</h2>
+      <div class="boards">
+        <div class="board">
+          <div class="frame">
+            <div class="box">Breadcrumb · H1 Contact us</div>
+            <div class="row">
+              <div class="box xtall">Form: Name* · Email*<br>Subject* ▾<br>Message* (char counter)<br>[Send message]</div>
+              <div class="box xtall">Address card<br>tel: / mailto: links<br><br>Embedded map (iframe)</div>
+            </div>
+          </div>
+          <p class="note">Messages are saved to the contact_messages table and shown to admins.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>10. Database entity-relationship diagram</h2>
+      <div class="erd">
+        <table><caption>users</caption><tbody>
+          <tr><td class="pk">user_id PK</td></tr><tr><td>full_name</td></tr><tr><td>email UNIQUE</td></tr>
+          <tr><td>phone</td></tr><tr><td>password_hash</td></tr><tr><td>role (customer|admin)</td></tr><tr><td>created_at</td></tr></tbody></table>
+        <table><caption>orders</caption><tbody>
+          <tr><td class="pk">order_id PK</td></tr><tr><td class="fk">user_id FK → users</td></tr><tr><td>status</td></tr>
+          <tr><td>pickup_time</td></tr><tr><td>payment_method</td></tr><tr><td>notes</td></tr><tr><td>total_amount</td></tr><tr><td>created_at</td></tr></tbody></table>
+        <table><caption>order_items</caption><tbody>
+          <tr><td class="pk">order_item_id PK</td></tr><tr><td class="fk">order_id FK → orders</td></tr>
+          <tr><td class="fk">product_id FK → products</td></tr><tr><td>quantity</td></tr><tr><td>unit_price</td></tr></tbody></table>
+        <table><caption>products</caption><tbody>
+          <tr><td class="pk">product_id PK</td></tr><tr><td class="fk">category_id FK → categories</td></tr><tr><td>name</td></tr>
+          <tr><td>description</td></tr><tr><td>price</td></tr><tr><td>stock_quantity</td></tr><tr><td>is_available</td></tr></tbody></table>
+        <table><caption>categories</caption><tbody>
+          <tr><td class="pk">category_id PK</td></tr><tr><td>name UNIQUE</td></tr><tr><td>description</td></tr></tbody></table>
+        <table><caption>contact_messages</caption><tbody>
+          <tr><td class="pk">message_id PK</td></tr><tr><td>name</td></tr><tr><td>email</td></tr><tr><td>subject</td></tr>
+          <tr><td>message</td></tr><tr><td>is_read</td></tr><tr><td>created_at</td></tr></tbody></table>
+      </div>
+      <div class="legend">
+        <span>users 1 ── ∞ orders</span><span>orders 1 ── ∞ order_items</span>
+        <span>products 1 ── ∞ order_items</span><span>categories 1 ── ∞ products</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
