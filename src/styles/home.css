@@ -1,0 +1,135 @@
+/* =========================================================
+   HOME: the price board hero, how ordering works, location
+   ========================================================= */
+
+.board {
+  color: #fff;
+  background: var(--clr-wall);
+  padding-block: var(--space-xl);
+}
+
+.board__inner {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.board__intro h1 {
+  max-width: 12ch;
+}
+
+.board__intro p {
+  margin-block: var(--space-md) var(--space-lg);
+  font-size: var(--fs-md);
+  color: #dfe7f7;
+}
+
+.board__intro .btn--outline {
+  color: #fff;
+}
+
+.board__intro .btn--outline:hover {
+  color: var(--clr-wall);
+  background: #fff;
+  border-color: #fff;
+}
+
+.board__hours {
+  margin-top: var(--space-lg);
+  font-weight: 700;
+}
+
+/* The signwritten price list */
+.board__list {
+  display: grid;
+  gap: var(--space-sm);
+  font-family: var(--font-sign);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.4rem);
+  line-height: 1.1;
+}
+
+.board__list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  animation: paint-in 420ms ease-out both;
+}
+
+/* Each price is painted 70ms after the one above it */
+.board__list li:nth-child(2) { animation-delay: 70ms; }
+.board__list li:nth-child(3) { animation-delay: 140ms; }
+.board__list li:nth-child(4) { animation-delay: 210ms; }
+.board__list li:nth-child(5) { animation-delay: 280ms; }
+.board__list li:nth-child(6) { animation-delay: 350ms; }
+.board__list li:nth-child(7) { animation-delay: 420ms; }
+.board__list li:nth-child(8) { animation-delay: 490ms; }
+.board__list li:nth-child(9) { animation-delay: 560ms; }
+
+.board__list a {
+  text-decoration: none;
+}
+
+.board__list a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--clr-sign);
+}
+
+.board__list .leader {
+  border-bottom-color: rgb(255 255 255 / 0.45);
+}
+
+.board__list data {
+  color: var(--clr-sign);
+}
+
+.board__more {
+  margin-top: var(--space-lg);
+  font-weight: 700;
+}
+
+.board__more a {
+  text-decoration-color: var(--clr-sign);
+}
+
+/* ---------- How it works: a real three-step sequence ---------- */
+.steps {
+  display: grid;
+  gap: var(--space-lg);
+  counter-reset: step;
+}
+
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  column-gap: var(--space-md);
+}
+
+.steps li::before {
+  content: counter(step);
+  grid-row: span 2;
+  font-family: var(--font-sign);
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 0.85;
+  color: var(--clr-wall);
+}
+
+.steps h3 {
+  margin-bottom: var(--space-xs);
+}
+
+@media (prefers-color-scheme: dark) {
+  .steps li::before { color: var(--clr-sign); }
+}
+
+@media (min-width: 768px) {
+  .steps { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .board__inner {
+    grid-template-columns: 1fr 1.15fr;
+    align-items: center;
+  }
+}

@@ -1,0 +1,196 @@
+/* =========================================================
+   BASE: design tokens (custom properties), reset, typography
+   The look is taken from a tuckshop counter: a painted blue
+   wall with prices signwritten in yellow.
+   ========================================================= */
+
+:root {
+  /* Colour: painted wall, signwriter paint, price sticker, paper and ink */
+  --clr-wall: #1f4fa3;
+  --clr-wall-dark: #173d80;
+  --clr-sign: #f7c600;
+  --clr-sticker: #d62718;
+  --clr-ink: #0e1a33;
+  --clr-paper: #ffffff;
+  --clr-concrete: #e8eae5;
+  --clr-muted: #4f5a70;
+  --clr-rule: #c9cdd4;
+  --clr-ok: #1d7a46;
+
+  /* Roles (swapped in dark mode) */
+  --clr-bg: var(--clr-paper);
+  --clr-surface: var(--clr-paper);
+  --clr-surface-alt: var(--clr-concrete);
+  --clr-text: var(--clr-ink);
+
+  /* Type: condensed signage face for display, a highly legible face for reading */
+  --font-sign: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --font-body: 'Libre Franklin', 'Franklin Gothic Medium', system-ui, sans-serif;
+
+  /* Scale based on a perfect fourth (1.333) */
+  --fs-sm: 0.875rem;
+  --fs-base: 1.0625rem;
+  --fs-md: 1.3125rem;
+  --fs-lg: 1.75rem;
+  --fs-xl: clamp(2rem, 1.5rem + 2vw, 2.375rem);
+  --fs-xxl: clamp(2.6rem, 1.6rem + 4vw, 4.2rem);
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 3rem;
+  --radius: 3px;
+  --measure: 66ch;
+  --container: 1180px;
+  --transition: 150ms ease-out;
+}
+
+/* Dark theme follows the operating system: ink becomes the background */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-bg: var(--clr-ink);
+    --clr-surface: #15244a;
+    --clr-surface-alt: #122041;
+    --clr-text: #f2f3f5;
+    --clr-muted: #aab3c5;
+    --clr-rule: #2c3d66;
+  }
+}
+
+/* Reset and box model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: var(--clr-text);
+  background-color: var(--clr-bg);
+}
+
+main {
+  flex: 1;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-sign);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+}
+
+h1 { font-size: var(--fs-xxl); font-weight: 900; }
+h2 { font-size: var(--fs-xl); margin-bottom: var(--space-md); }
+h3 { font-size: var(--fs-md); }
+
+p {
+  max-width: var(--measure);
+}
+
+p + p {
+  margin-top: var(--space-md);
+}
+
+p + h2,
+ul + h2,
+ol + h2 {
+  margin-top: var(--space-xl);
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--clr-wall);
+}
+
+a:hover {
+  text-decoration-color: var(--clr-sign);
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+mark {
+  background: var(--clr-sign);
+  color: var(--clr-ink);
+}
+
+/* Prices line up in columns */
+data,
+.price {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 3px solid var(--clr-sign);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--clr-wall);
+}
+
+::selection {
+  background: var(--clr-sign);
+  color: var(--clr-ink);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-md);
+  top: -100px;
+  z-index: 100;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--clr-sign);
+  color: var(--clr-ink);
+}
+
+.skip-link:focus {
+  top: var(--space-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
